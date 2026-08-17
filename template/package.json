@@ -1,5 +1,5 @@
 {
-  "name": "universal-auth-boilerplate",
+  "name": "{{PROJECT_NAME}}",
   "version": "1.0.0",
   "description": "Universal auth boilerplate with better-auth, email OTP, and Google OAuth",
   "main": "index.js",
@@ -14,8 +14,6 @@
     "studio": "prisma studio",
     "push": "prisma db push",
     "pull": "prisma db pull",
-    "build:cli": "cd cli && npm run build",
-    "dev:cli": "cd cli && npx tsx src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,0 +1,43 @@
+{
+  "name": "create-universal-auth-app",
+  "version": "1.0.1",
+  "description": "Scaffold a new universal-auth-boilerplate project",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "create-universal-auth-app": "./dist/index.js",
+    "cuaa": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Forhad96/universal-auth-boilerplate.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/Forhad96/universal-auth-boilerplate",
+  "bugs": {
+    "url": "https://github.com/Forhad96/universal-auth-boilerplate/issues"
+  },
+  "author": "Forhad96",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/copy-template.mjs",
+    "prepublishOnly": "tsc && node scripts/copy-template.mjs",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": ["cli", "scaffold", "auth", "better-auth", "prisma", "express", "boilerplate"],
+  "license": "ISC",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "ora": "^8.2.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+dist/
+
+# Environment files (contain secrets — NEVER commit)
+.env
+.env.*
+!.env.example
+
+# Generated code
+src/generated/
+.prisma/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
