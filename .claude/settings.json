@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(pnpm lint *)",
+      "Bash(grep -rn \"console\\\\.log.*\\\\$\" src/ --include=\"*.ts\")",
+      "Bash(ls /home/forhad/Programing/Personal/Boilerplate/Backend/)",
+      "Read(//home/forhad/Programing/Personal/Boilerplate/Backend/**)"
+    ]
+  }
+}
