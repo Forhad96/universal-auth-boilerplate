@@ -18,22 +18,6 @@ That's it — a complete auth-ready backend project is created in your current d
 
 ---
 
-## What You Get
-
-| Feature | Details |
-|---|---|
-| **Auth** | better-auth with email/password + Google OAuth + OTP verification |
-| **Database** | Prisma ORM with PostgreSQL (`@prisma/adapter-pg`) |
-| **Caching** | Redis client (optional, falls back to localhost) |
-| **File Upload** | Cloudinary integration via Multer |
-| **Validation** | Zod schemas on every endpoint |
-| **Security** | Helmet CSP, CORS, rate limiting, prototype pollution protection |
-| **Error Handling** | Centralized `globalErrorHandler` with Prisma/Zod error maps |
-| **Email** | Nodemailer + EJS templates for OTP delivery |
-| **Super Admin** | Auto-seeded on first boot |
-
----
-
 ## Usage
 
 ### Basic
@@ -49,6 +33,23 @@ npx create-universal-auth-app my-api -d /path/to/parent
 # Creates /path/to/parent/my-api/
 ```
 
+### Alternative Templates
+
+Future template flavors can be selected with `--template`:
+
+```bash
+npx create-universal-auth-app my-api --template minimal
+```
+
+### Flags
+
+| Flag | Description |
+|---|---|
+| `-d, --dir <dir>` | Target parent directory (default: cwd) |
+| `-t, --template <flavor>` | Use an alternate template (e.g. `minimal`) |
+| `--no-install` | Skip the auto-install dependency step |
+| `-f, --force` | Overwrite target directory if it already exists |
+
 ### Aliases
 
 ```bash
@@ -63,11 +64,13 @@ npx cuaa my-api
 ```bash
 cd my-api
 cp .env.example .env          # fill in your secrets
-npm install
+npm install                   # or pnpm install / bun install / yarn install
 npx prisma generate           # generate Prisma client
 npx prisma migrate dev        # create & run migrations
 npm run dev                   # start dev server
 ```
+
+Package manager is auto-detected from the lockfile present in the template (`pnpm-lock.yaml` → pnpm, etc.) and used for the install step.
 
 ### Available Scripts
 
@@ -79,6 +82,22 @@ npm run dev                   # start dev server
 | `npm run migrate` | Run pending migrations (`prisma migrate dev`) |
 | `npm run studio` | Open Prisma Studio GUI |
 | `npm run lint` | Run ESLint |
+
+---
+
+## What You Get
+
+| Feature | Details |
+|---|---|
+| **Auth** | better-auth with email/password + Google OAuth + OTP verification |
+| **Database** | Prisma ORM with PostgreSQL (`@prisma/adapter-pg`) |
+| **Caching** | Redis client (optional, falls back to localhost) |
+| **File Upload** | Cloudinary integration via Multer |
+| **Validation** | Zod schemas on every endpoint |
+| **Security** | Helmet CSP, CORS, rate limiting, prototype pollution protection |
+| **Error Handling** | Centralized `globalErrorHandler` with Prisma/Zod error maps |
+| **Email** | Nodemailer + EJS templates for OTP delivery |
+| **Super Admin** | Auto-seeded on first boot |
 
 ---
 

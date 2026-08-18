@@ -1,10 +1,4 @@
 /**
- * All placeholders used in the template.
- * The scaffold step replaces each one with the user-supplied project name slug.
- */
-export const PLACEHOLDERS = ["{{PROJECT_NAME}}"] as const;
-
-/**
  * Maps each placeholder to the list of template-file basenames where it appears.
  * The scaffold step reads each of these files after copying and runs the replacement.
  */
@@ -13,7 +7,32 @@ export const PLACEHOLDER_TARGETS: Readonly<Record<string, readonly string[]>> = 
 } as const;
 
 /**
- * Files that should never appear in the scaffolded output.
+ * File extensions treated as binary — skipped during text-based placeholder
+ * replacement so that .svg, .ico, .woff, .wasm, etc. are never corrupted by
+ * a naive UTF-8 replace-all.
+ */
+export const BINARY_EXTENSIONS = new Set([
+  ".ico",
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".bmp",
+  ".webp",
+  ".woff",
+  ".woff2",
+  ".ttf",
+  ".eot",
+  ".svg",
+  ".wasm",
+  ".zip",
+  ".tar",
+  ".gz",
+  ".lock",
+]);
+
+/**
+ * Directories skipped when copying the template into the scaffolded output.
  */
 export const EXCLUDED_DIRS = [
   "node_modules",
@@ -26,5 +45,7 @@ export const EXCLUDED_DIRS = [
 
 /**
  * Files in the root of template/ that are excluded from the scaffold output.
+ * These are typically generated/repo-local files that should be regenerated
+ * by the user after scaffolding.
  */
 export const EXCLUDED_FILES = ["pnpm-lock.yaml"] as const;

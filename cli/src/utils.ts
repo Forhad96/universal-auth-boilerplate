@@ -1,4 +1,11 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+  copyFileSync,
+  mkdirSync,
+  existsSync,
+} from "node:fs";
 import path from "node:path";
 
 /**
@@ -12,8 +19,8 @@ export function toKebabCase(name: string): string {
   return name
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-") // replace any non-alphanumeric run with single hyphen
-    .replace(/^-|-$/g, "");       // trim leading/trailing hyphens
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 /**
@@ -42,9 +49,18 @@ export function validateProjectName(name: string): string {
   return slug;
 }
 
+function readdirSyncWithTypes(dir: string): { name: string; isDirectory: boolean; isSymbolicLink: boolean }[] {
+  return readdirSync(dir, { withFileTypes: true }).map((d) => ({
+    name: d.name,
+    isDirectory: d.isDirectory(),
+    isSymbolicLink: d.isSymbolicLink(),
+  }));
+}
+
 /**
  * Deep-copy a source directory to a destination directory,
  * skipping entries in the exclude list (by basename).
+ * Symlinks are skipped to avoid following external links or duplicating targets.
  */
 export function copyRecursive(
   src: string,
@@ -64,28 +80,11 @@ export function copyRecursive(
     if (entry.isDirectory) {
       mkdirSync(destPath, { recursive: true });
       copyRecursive(srcPath, destPath, exclude);
-    } else {
+    } else if (!entry.isSymbolicLink) {
       mkdirSync(path.dirname(destPath), { recursive: true });
       copyFileSync(srcPath, destPath);
     }
   }
-}
-
-// --- thin wrappers around node:fs so we stay ESM-friendly ---
-import {
-  readdirSync,
-  copyFileSync,
-  mkdirSync,
-  existsSync,
-  readFileSync as rf,
-  writeFileSync as wf,
-} from "node:fs";
-
-function readdirSyncWithTypes(dir: string): { name: string; isDirectory: boolean }[] {
-  return readdirSync(dir, { withFileTypes: true }).map((d) => ({
-    name: d.name,
-    isDirectory: d.isDirectory(),
-  }));
 }
 
 export function ensureDir(dir: string): void {
@@ -97,17 +96,10 @@ export function fileExists(p: string): boolean {
 }
 
 export function readFile(p: string): string {
-  return rf(p, "utf-8");
+  return readFileSync(p, "utf-8");
 }
 
 export function writeFile(p: string, content: string): void {
   mkdirSync(path.dirname(p), { recursive: true });
-  wf(p, content, "utf-8");
-}
-
-export function removeFile(p: string): void {
-  if (existsSync(p)) {
-    rf(p); // no-op just to confirm it's readable
-    require("node:fs").unlinkSync(p);
-  }
+  writeFileSync(p, content, "utf-8");
 }
